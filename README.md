@@ -1,4 +1,4 @@
-# OpenWRT NCS601 (and clones) RTSP Config
+# OpenWRT NCS601W (and clones) RTSP Config
 This repository contains scripts, file customization, and instructions for the Wansview NCS601W OpenWRT image to get video and audio from the device via an RTSP stream. This was developed and tested on two Belkin Netcam F7D7601v1 model cameras but should work with the Wansview NCS601W and possibly the imogenstudio +CAM. The OpenWRT image used is 19.07.10. Please note this version is no longer maintained, may have security vulnerabilities, and should only be used on a secure network. 
 
 ## Requirements
@@ -28,29 +28,41 @@ Now, you can edit the files in /root accordingly and reboot the device. You shou
 
 ## File explanations
 
-**/etc/modules.d/video-uvc**
+**/etc/modules.d/video-uvc**  
 On boot, loads the uvcvideo module with the required quirks to get the USB camera to work
 
-**/etc/rc.local**
+**/etc/rc.local**  
 Commands to run after init process is done to start the video and audio streams (if the camera mode switch is selected)
 
-**/root/led.sh**
+**/root/led.sh**  
 Script to turn the LED light on according to the status of the light sensor
 
-**/root/go2rtc_ip**
+**/root/go2rtc_ip**  
 Contains the IP address of your go2rtc server to point the audio stream
 
-**/root/go2rtc_port**
+**/root/go2rtc_port**  
 Contains the port you want to use for the audio stream
 
-**/etc/config/network**
+**/etc/config/network**  
 UCI file to set the ethernet port to DHCP by default
+
+## Build instructions
+
+More information on the OpenWRT image builder [here](https://openwrt.org/docs/guide-user/additional-software/imagebuilder)
+
+```bash
+git clone https://github.com/csev1755/openwrt-ncs601W-config.git
+cd openwrt-ncs601W-config
+wget https://archive.openwrt.org/releases/19.07.10/targets/ramips/rt305x/openwrt-imagebuilder-19.07.10-ramips-rt305x.Linux-x86_64.tar.xz
+tar -xf openwrt-imagebuilder-19.07.10-ramips-rt305x.Linux-x86_64.tar.xz --strip=1
+make image PROFILE="ncs601w" PACKAGES="kmod-usb-audio libgstreamer1 gstreamer1-utils gst1-mod-alsa gst1-mod-audioconvert gst1-mod-audiorate gst1-mod-audioresample gst1-mod-alaw gst1-mod-rtp gst1-mod-udp mjpg-streamer nano -firewall -ip6tables -iptables -odhcp6c -odhcpd-ipv6only -dnsmasq" FILES="files"
+```
 
 ## Made possible by
 
-[OpenWrt](https://openwrt.org/)
-[mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer)
-[Gstreamer](https://gstreamer.freedesktop.org/)
-[go2rtc](https://github.com/AlexxIT/go2rtc)
+[OpenWrt](https://openwrt.org/)  
+[mjpg-streamer](https://github.com/jacksonliam/mjpg-streamer)  
+[Gstreamer](https://gstreamer.freedesktop.org/)  
+[go2rtc](https://github.com/AlexxIT/go2rtc)  
 
 Special thanks to the following article where lots of device specific information came from: http://wanda25.de/wansview_ncs601w.html
