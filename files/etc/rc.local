@@ -1,0 +1,17 @@
+echo 0 > /sys/class/gpio/export
+echo in > /sys/class/gpio/gpio0/direction
+echo 7 > /sys/class/gpio/export
+echo in > /sys/class/gpio/gpio7/direction
+echo 8 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio8/direction
+
+ip=$(cat /root/go2rtc_ip)
+port=$(cat /root/go2rtc_port)
+
+if [ "$(cat /sys/class/gpio/gpio0/value)" -eq 0 ]; then
+	sh /root/led.sh &
+	mjpg_streamer -b -i "input_uvc.so -d /dev/video0" -o "output_http.so"
+	gst-launch-1.0 -v alsasrc ! audioconvert ! audiorate ! audioresample ! 'audio/x-raw,rate=8000' ! alawenc ! rtppcmapay ! udpsink host=$ip port=$port
+fi
+
+exit 0
