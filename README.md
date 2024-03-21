@@ -55,7 +55,27 @@ git clone https://github.com/csev1755/openwrt-ncs601W-config.git
 cd openwrt-ncs601W-config
 wget https://archive.openwrt.org/releases/19.07.10/targets/ramips/rt305x/openwrt-imagebuilder-19.07.10-ramips-rt305x.Linux-x86_64.tar.xz
 tar -xf openwrt-imagebuilder-19.07.10-ramips-rt305x.Linux-x86_64.tar.xz --strip=1
-make image PROFILE="ncs601w" PACKAGES="kmod-usb-audio libgstreamer1 gstreamer1-utils gst1-mod-alsa gst1-mod-audioconvert gst1-mod-audiorate gst1-mod-audioresample gst1-mod-alaw gst1-mod-rtp gst1-mod-udp mjpg-streamer nano -firewall -ip6tables -iptables -odhcp6c -odhcpd-ipv6only -dnsmasq" FILES="files"
+make image \
+PROFILE="ncs601w" \
+PACKAGES="kmod-usb-audio \
+libgstreamer1 \
+gstreamer1-utils \
+gst1-mod-alsa \
+gst1-mod-audioconvert \
+gst1-mod-audiorate \
+gst1-mod-audioresample \
+gst1-mod-alaw \
+gst1-mod-rtp \
+gst1-mod-udp \
+mjpg-streamer \
+nano \
+-firewall \
+-ip6tables \
+-iptables \
+-odhcp6c \
+-odhcpd-ipv6only \
+-dnsmasq" \
+FILES="files"
 ```
 
 ## Made possible by
