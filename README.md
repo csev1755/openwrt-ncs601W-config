@@ -1,5 +1,5 @@
 # OpenWRT NCS601W (and clones) RTSP Config
-This repository contains scripts, file customization, and instructions for the Wansview NCS601W OpenWRT image to get video and audio from the device via an RTSP stream. This was developed and tested on two Belkin Netcam F7D7601v1 model cameras but should work with the Wansview NCS601W and possibly the imogenstudio +CAM. The OpenWRT image used is 19.07.10. Please note this version is no longer maintained, may have security vulnerabilities, and should only be used on a secure network. 
+This repository contains scripts, file customization, and instructions for the Wansview NCS601W OpenWRT image to get video and audio from the device via an RTSP stream. This was developed and tested on two Belkin Netcam F7D7601v1 model cameras but should work with the Wansview NCS601W, imogenstudio +CAM and Aztech WIPC303 as they appear to be clones. The OpenWRT image used is 19.07.10. Please note this version is no longer maintained, may have security vulnerabilities, and should only be used on a secure network. 
 
 ## Requirements
 
