@@ -1,0 +1,4 @@
+[submodule "openwrt"]
+	path = openwrt
+	url = https://github.com/csev1755/openwrt
+	branch = wansview_ncs601w
