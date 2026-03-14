@@ -1,4 +1,0 @@
-[submodule "openwrt"]
-	path = openwrt
-	url = https://github.com/openwrt/openwrt
-	branch = main

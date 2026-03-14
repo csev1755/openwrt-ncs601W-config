@@ -7,13 +7,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Update submodule
-        run: git submodule update --init --recursive
-      
       - name: Install dependencies
         run: |
           sudo apt update
@@ -21,14 +18,14 @@ jobs:
           gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev \
           python3-setuptools rsync swig unzip zlib1g-dev file wget
 
+      - name: Clone latest OpenWRT
+        run: git clone --depth 1 https://github.com/openwrt/openwrt.git
+
       - name: Update feeds
         working-directory: openwrt
         run: |
           scripts/feeds update -a
           scripts/feeds install -a
-
-      - name: Copy diffconfig
-        run: cp diffconfig openwrt/.config
       
       - name: Make firmware
         working-directory: openwrt
