@@ -23,7 +23,7 @@ jobs:
 
       - name: Apply patchset
         working-directory: openwrt
-        run: git am ../patches/
+        run: git apply ../patches/*
 
       - name: Update feeds
         working-directory: openwrt
