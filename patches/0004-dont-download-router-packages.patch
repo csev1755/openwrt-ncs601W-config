@@ -1,0 +1,25 @@
+From c9899a1ea975706bd1a3442b6c3e227737842f1d Mon Sep 17 00:00:00 2001
+From: csev1755 <49533775+csev1755@users.noreply.github.com>
+Date: Mon, 17 Nov 2025 19:03:13 -0600
+Subject: [PATCH 04/11] dont download router packages
+
+---
+ include/target.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/target.mk b/include/target.mk
+index 45d0a6686b5..a28d886c0d4 100644
+--- a/include/target.mk
++++ b/include/target.mk
+@@ -10,7 +10,7 @@ __target_inc=1
+ ##@
+ # @brief Default device type ( basic | nas | router ).
+ ##
+-DEVICE_TYPE?=router
++DEVICE_TYPE?=basic
+ 
+ ##@
+ # @brief Default packages.
+-- 
+2.43.0
+

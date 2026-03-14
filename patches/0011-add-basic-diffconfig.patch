@@ -1,0 +1,24 @@
+From c4405cd1e9c3255155af0c2e1aeff2e81f3934d0 Mon Sep 17 00:00:00 2001
+From: csev1755 <49533775+csev1755@users.noreply.github.com>
+Date: Sat, 14 Mar 2026 11:13:59 -0500
+Subject: [PATCH 11/11] add basic diffconfig
+
+---
+ diffconfig | 5 +++++
+ 1 file changed, 5 insertions(+)
+ create mode 100644 diffconfig
+
+diff --git a/diffconfig b/diffconfig
+new file mode 100644
+index 00000000000..93494c1c886
+--- /dev/null
++++ b/diffconfig
+@@ -0,0 +1,5 @@
++CONFIG_TARGET_ramips=y
++CONFIG_TARGET_ramips_rt305x=y
++CONFIG_TARGET_ramips_rt305x_DEVICE_wansview_ncs601w=y
++CONFIG_IB=y
++CONFIG_IB_STANDALONE=y
+-- 
+2.43.0
+

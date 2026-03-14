@@ -1,0 +1,42 @@
+From c76c6af886ee8331191d202d78c2194cdc77dd2d Mon Sep 17 00:00:00 2001
+From: csev1755 <49533775+csev1755@users.noreply.github.com>
+Date: Mon, 14 Apr 2025 21:11:03 -0500
+Subject: [PATCH 01/11] get the ncs601w booting in the latest snapshot
+
+Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
+---
+ target/linux/ramips/dts/rt5350_wansview_ncs601w.dts | 5 +++++
+ target/linux/ramips/image/rt305x.mk                 | 1 +
+ 2 files changed, 6 insertions(+)
+
+diff --git a/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts b/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
+index 52be1d7284c..d0fb2353798 100644
+--- a/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
++++ b/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
+@@ -3,6 +3,11 @@
+ / {
+ 	compatible = "wansview,ncs601w", "ralink,rt5350-soc";
+ 	model = "Wansview NCS601W";
++
++	memory@0 {
++		reg = <0x0 0x4000000>;
++		device_type = "memory";
++	};
+ };
+ 
+ &spi0 {
+diff --git a/target/linux/ramips/image/rt305x.mk b/target/linux/ramips/image/rt305x.mk
+index f52098c7334..10c6f1cf751 100644
+--- a/target/linux/ramips/image/rt305x.mk
++++ b/target/linux/ramips/image/rt305x.mk
+@@ -1177,6 +1177,7 @@ endef
+ TARGET_DEVICES += vocore_vocore-8m
+ 
+ define Device/wansview_ncs601w
++  $(Device/uimage-lzma-loader)
+   SOC := rt5350
+   IMAGE_SIZE := 7872k
+   DEVICE_VENDOR := Wansview
+-- 
+2.43.0
+

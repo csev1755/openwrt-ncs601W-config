@@ -1,0 +1,35 @@
+From 56b8b499a78401592d0aa86aa2cf48fa62d50647 Mon Sep 17 00:00:00 2001
+From: csev1755 <49533775+csev1755@users.noreply.github.com>
+Date: Sun, 23 Nov 2025 09:47:00 -0600
+Subject: [PATCH 07/11] Revert "change default network config to dhcp"
+
+This reverts commit cd5d7cf67efa68eb4ee53a8e06bc1f547776381c.
+---
+ .../linux/ramips/rt305x/base-files/etc/board.d/02_network   | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/target/linux/ramips/rt305x/base-files/etc/board.d/02_network b/target/linux/ramips/rt305x/base-files/etc/board.d/02_network
+index 5655b03fbae..64c3997f27e 100644
+--- a/target/linux/ramips/rt305x/base-files/etc/board.d/02_network
++++ b/target/linux/ramips/rt305x/base-files/etc/board.d/02_network
+@@ -30,16 +30,12 @@ ramips_setup_interfaces()
+ 	tenda,w150m|\
+ 	trendnet,tew-714tru|\
+ 	unbranded,a5-v11|\
++	wansview,ncs601w|\
+ 	zorlik,zl5900v2)
+ 		ucidef_add_switch "switch0"
+ 		ucidef_add_switch_attr "switch0" "enable" "false"
+ 		ucidef_set_interface_lan "eth0"
+ 		;;
+-	wansview,ncs601)
+-		ucidef_add_switch "switch0"
+-		ucidef_add_switch_attr "switch0" "enable" "false"
+-		ucidef_set_interface_lan "eth0" "dhcp"
+-		;;
+ 	8devices,carambola)
+ 		ucidef_add_switch "switch0" \
+ 			"0:lan" "1:lan" "6@eth0"
+-- 
+2.43.0
+
