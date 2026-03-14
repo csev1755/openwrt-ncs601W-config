@@ -1,12 +1,12 @@
-From 9f79f9e00cebddb13cdad5c5f305987d6279a5ee Mon Sep 17 00:00:00 2001
+From 88a520792e991025b28a776ed71d7357cf4d3b60 Mon Sep 17 00:00:00 2001
 From: csev1755 <49533775+csev1755@users.noreply.github.com>
-Date: Sat, 14 Mar 2026 16:06:25 -0500
+Date: Sat, 14 Mar 2026 16:49:48 -0500
 Subject: [PATCH] ncs601w config
 
 Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
 ---
- .gitignore                                    |  1 -
- diffconfig                                    | 32 ++++++++++
+ .config                                       | 32 ++++++++++
+ .gitignore                                    |  2 -
  files/etc/config/audio-streamer               |  2 +
  files/etc/config/ir-led                       |  4 ++
  files/etc/init.d/audio-streamer               | 42 +++++++++++++
@@ -16,8 +16,8 @@ Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
  include/target.mk                             |  2 +-
  .../ramips/dts/rt5350_wansview_ncs601w.dts    |  5 ++
  target/linux/ramips/image/rt305x.mk           |  3 +-
- 11 files changed, 153 insertions(+), 3 deletions(-)
- create mode 100644 diffconfig
+ 11 files changed, 153 insertions(+), 4 deletions(-)
+ create mode 100644 .config
  create mode 100644 files/etc/config/audio-streamer
  create mode 100644 files/etc/config/ir-led
  create mode 100755 files/etc/init.d/audio-streamer
@@ -25,23 +25,11 @@ Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
  create mode 100644 files/etc/modules.d/video-uvc
  create mode 100755 files/etc/uci-defaults/99-custom
 
-diff --git a/.gitignore b/.gitignore
-index ad04755919..964c918259 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -13,7 +13,6 @@
- /logs
- /feeds
- /feeds.conf
--/files
- /target/linux/feeds
- /overlay
- /package/feeds
-diff --git a/diffconfig b/diffconfig
+diff --git a/.config b/.config
 new file mode 100644
 index 0000000000..646c1cc2ee
 --- /dev/null
-+++ b/diffconfig
++++ b/.config
 @@ -0,0 +1,32 @@
 +CONFIG_TARGET_ramips=y
 +CONFIG_TARGET_ramips_rt305x=y
@@ -75,6 +63,26 @@ index 0000000000..646c1cc2ee
 +CONFIG_PACKAGE_mjpg-streamer-input-uvc=y
 +CONFIG_PACKAGE_mjpg-streamer-output-http=y
 +# CONFIG_PACKAGE_libgst1video is not set
+diff --git a/.gitignore b/.gitignore
+index ad04755919..3dd918dbec 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -3,7 +3,6 @@
+ .*.swp
+ /env
+ /dl
+-/.config
+ /.config.old
+ /.toolchain_build_ver
+ /bin
+@@ -13,7 +12,6 @@
+ /logs
+ /feeds
+ /feeds.conf
+-/files
+ /target/linux/feeds
+ /overlay
+ /package/feeds
 diff --git a/files/etc/config/audio-streamer b/files/etc/config/audio-streamer
 new file mode 100644
 index 0000000000..cdcbe42690
