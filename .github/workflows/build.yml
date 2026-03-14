@@ -21,6 +21,10 @@ jobs:
       - name: Clone latest OpenWRT
         run: git clone --depth 1 https://github.com/openwrt/openwrt.git
 
+      - name: Apply patchset
+        working-directory: openwrt
+        run: git am ../patches/
+
       - name: Update feeds
         working-directory: openwrt
         run: |
