@@ -1,0 +1,64 @@
+From ce5142bc28ea861cafc5ec2e21ffe1f46c394093 Mon Sep 17 00:00:00 2001
+From: csev1755 <49533775+csev1755@users.noreply.github.com>
+Date: Sun, 29 Mar 2026 08:32:14 -0500
+Subject: [PATCH] ncs601w compatibility
+
+patch openwrt > 19.07.10 to support legacy device ncs601w
+
+Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
+---
+ include/target.mk                                   | 2 +-
+ target/linux/ramips/dts/rt5350_wansview_ncs601w.dts | 5 +++++
+ target/linux/ramips/image/rt305x.mk                 | 3 ++-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/include/target.mk b/include/target.mk
+index 45d0a6686b..a28d886c0d 100644
+--- a/include/target.mk
++++ b/include/target.mk
+@@ -10,7 +10,7 @@ __target_inc=1
+ ##@
+ # @brief Default device type ( basic | nas | router ).
+ ##
+-DEVICE_TYPE?=router
++DEVICE_TYPE?=basic
+ 
+ ##@
+ # @brief Default packages.
+diff --git a/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts b/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
+index 52be1d7284..d0fb235379 100644
+--- a/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
++++ b/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
+@@ -3,6 +3,11 @@
+ / {
+ 	compatible = "wansview,ncs601w", "ralink,rt5350-soc";
+ 	model = "Wansview NCS601W";
++
++	memory@0 {
++		reg = <0x0 0x4000000>;
++		device_type = "memory";
++	};
+ };
+ 
+ &spi0 {
+diff --git a/target/linux/ramips/image/rt305x.mk b/target/linux/ramips/image/rt305x.mk
+index f52098c733..1a2ab20c4a 100644
+--- a/target/linux/ramips/image/rt305x.mk
++++ b/target/linux/ramips/image/rt305x.mk
+@@ -1177,11 +1177,12 @@ endef
+ TARGET_DEVICES += vocore_vocore-8m
+ 
+ define Device/wansview_ncs601w
++  $(Device/uimage-lzma-loader)
+   SOC := rt5350
+   IMAGE_SIZE := 7872k
+   DEVICE_VENDOR := Wansview
+   DEVICE_MODEL := NCS601W
+-  DEVICE_PACKAGES := kmod-video-core kmod-video-uvc kmod-usb-ohci
++  DEVICE_PACKAGES := kmod-video-core kmod-video-uvc kmod-usb-ohci kmod-sound-core kmod-usb-audio
+   SUPPORTED_DEVICES += ncs601w
+ endef
+ TARGET_DEVICES += wansview_ncs601w
+-- 
+2.53.0
+

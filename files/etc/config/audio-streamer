@@ -1,0 +1,2 @@
+config audio-streamer
+    option enabled '0'

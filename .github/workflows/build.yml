@@ -1,9 +1,14 @@
 name: Configure and build firmware
 
 on:
-  push:
-    branches: [ "next" ]
   workflow_dispatch:
+    inputs:
+      openwrt_hash:
+        description: 'The hash of OpenWRT to clone'
+        required: true
+      diffconfig:
+        description: 'The name of the diffconfig to use'
+        required: true
 
 jobs:
   build:
@@ -19,7 +24,16 @@ jobs:
           python3-setuptools rsync swig unzip zlib1g-dev file wget
 
       - name: Clone latest OpenWRT
-        run: git clone --depth 1 https://github.com/openwrt/openwrt.git
+        env: 
+          OPENWRT_HASH: ${{ inputs.openwrt_hash }}
+        run: git clone --depth 1 https://github.com/openwrt/openwrt.git --revision=$OPENWRT_HASH
+      
+      - name: Copy diffconfig and files
+        env:
+          DIFFCONFIG: ${{ inputs.diffconfig }}
+        run: | 
+          cp configs/${{ inputs.diffconfig }} openwrt/.config
+          cp -r files openwrt/
 
       - name: Apply patchset
         working-directory: openwrt

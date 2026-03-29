@@ -1,0 +1,42 @@
+#!/bin/sh /etc/rc.common
+
+START=90
+STOP=10
+
+USE_PROCD=1
+PROG=/usr/bin/gst-launch-1.0
+error() {
+	echo "${initscript}:" "$@" 1>&2
+}
+
+start_instance() {
+    local s="$1"
+
+    local enabled
+    config_get_bool enabled "$s" 'enabled' 0
+    [ "$enabled" -gt 0 ] || return
+
+    local host port
+    config_get host "$s" 'host'
+    config_get port "$s" 'port'
+
+    if [ -z "$host" ] || [ -z "$port" ]; then
+        error "Missing required 'host' or 'port' in config section '$s'"
+        return 1
+    fi
+
+    procd_open_instance
+    procd_set_param command "$PROG" -v alsasrc device=hw:0 ! \
+        "audio/x-raw,format=S16LE,channels=1,rate=8000" ! alawenc ! \
+        rtppcmapay ! udpsink host=${host} port=${port}
+    procd_close_instance
+}
+
+start_service() {
+    config_load 'audio-streamer'
+    config_foreach start_instance 'audio-streamer'
+}
+
+service_triggers() {
+	procd_add_reload_trigger 'audio-streamer'
+}
