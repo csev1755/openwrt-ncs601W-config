@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: openwrt/imagebuilder:ramips-rt305x-19.07.10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          make image \
+            PROFILE="ncs601w" \
+            PACKAGES="kmod-usb-audio \
+            libgstreamer1 \
+            gstreamer1-utils \
+            gst1-mod-alsa \
+            gst1-mod-audioconvert \
+            gst1-mod-audiorate \
+            gst1-mod-audioresample \
+            gst1-mod-alaw \
+            gst1-mod-rtp \
+            gst1-mod-udp \
+            mjpg-streamer \
+            nano \
+            -firewall \
+            -ip6tables \
+            -iptables \
+            -odhcp6c \
+            -odhcpd-ipv6only \
+            -dnsmasq" \
+            FILES="files"
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: openwrt/bin/targets
