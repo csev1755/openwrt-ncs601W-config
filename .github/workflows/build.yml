@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: openwrt/imagebuilder:ramips-rt305x-19.07.10
-      options: --user buildbot
+      options: --user 1000:1000
     steps:
       - uses: actions/checkout@v6
 
