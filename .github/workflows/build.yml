@@ -6,9 +6,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: openwrt/imagebuilder:ramips-rt305x-19.07.10
+    container: 
+      image: openwrt/imagebuilder:ramips-rt305x-19.07.10
+      options: --user buildbot
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build
         run: |
