@@ -8,9 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: openwrt/imagebuilder:ramips-rt305x-19.07.10
-      options: --user 1000:1000
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Build
         run: |
@@ -40,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: openwrt/bin/targets
+          path: bin/targets
