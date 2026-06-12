@@ -27,6 +27,12 @@ jobs:
         env: 
           OPENWRT_HASH: ${{ inputs.openwrt_hash }}
         run: git clone --depth 1 https://github.com/openwrt/openwrt.git --revision=$OPENWRT_HASH
+
+      - name: Update feeds
+        working-directory: openwrt
+        run: |
+          scripts/feeds update -a
+          scripts/feeds install -a
       
       - name: Copy diffconfig and files
         env:
@@ -38,12 +44,6 @@ jobs:
       - name: Apply patchset
         working-directory: openwrt
         run: git apply ../patches/*
-
-      - name: Update feeds
-        working-directory: openwrt
-        run: |
-          scripts/feeds update -a
-          scripts/feeds install -a
       
       - name: Make firmware
         working-directory: openwrt
