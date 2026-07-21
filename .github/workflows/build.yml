@@ -49,8 +49,8 @@ jobs:
         working-directory: openwrt
         run: make defconfig download clean world   
 
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: openwrt-${{ inputs.openwrt_hash }}
-          path: openwrt/
+          name: firmware
+          path: openwrt/bin/targets
