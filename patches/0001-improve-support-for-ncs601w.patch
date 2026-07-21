@@ -1,30 +1,14 @@
-From ce5142bc28ea861cafc5ec2e21ffe1f46c394093 Mon Sep 17 00:00:00 2001
+From 7dc92c7ef60e6b16a2e5b88026e804748dfa6d52 Mon Sep 17 00:00:00 2001
 From: csev1755 <49533775+csev1755@users.noreply.github.com>
-Date: Sun, 29 Mar 2026 08:32:14 -0500
-Subject: [PATCH] ncs601w compatibility
-
-patch openwrt > 19.07.10 to support legacy device ncs601w
+Date: Mon, 20 Jul 2026 21:48:53 -0500
+Subject: [PATCH 1/2] improve support for ncs601w
 
 Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
 ---
- include/target.mk                                   | 2 +-
  target/linux/ramips/dts/rt5350_wansview_ncs601w.dts | 5 +++++
  target/linux/ramips/image/rt305x.mk                 | 3 ++-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/target.mk b/include/target.mk
-index 45d0a6686b..a28d886c0d 100644
---- a/include/target.mk
-+++ b/include/target.mk
-@@ -10,7 +10,7 @@ __target_inc=1
- ##@
- # @brief Default device type ( basic | nas | router ).
- ##
--DEVICE_TYPE?=router
-+DEVICE_TYPE?=basic
- 
- ##@
- # @brief Default packages.
 diff --git a/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts b/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
 index 52be1d7284..d0fb235379 100644
 --- a/target/linux/ramips/dts/rt5350_wansview_ncs601w.dts
@@ -60,5 +44,5 @@ index f52098c733..1a2ab20c4a 100644
  endef
  TARGET_DEVICES += wansview_ncs601w
 -- 
-2.53.0
+2.55.0
 
