@@ -1,0 +1,4 @@
+config ir-led
+    option enabled '0'
+    option sensor '519'
+    option led '520'

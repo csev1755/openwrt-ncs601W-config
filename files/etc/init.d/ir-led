@@ -1,0 +1,60 @@
+#!/bin/sh /etc/rc.common
+
+START=95
+STOP=10
+
+USE_PROCD=1
+
+start_service() {
+	config_load 'ir-led'
+	config_foreach start_instance 'ir-led'
+}
+
+start_instance() {
+	local section="$1"
+
+	local enabled sensor led
+	config_get_bool enabled "$section" 'enabled' 0
+	config_get sensor "$section" 'sensor'
+	config_get led "$section" 'led'
+
+	[ "$enabled" -gt 0 ] || return
+
+	# Validate GPIOs
+	[ -n "$sensor" ] || { echo "Missing 'sensor' GPIO in config"; return 1; }
+	[ -n "$led" ] || { echo "Missing 'led' GPIO in config"; return 1; }
+
+	# Export GPIOs if not already exported
+	[ -d /sys/class/gpio/gpio${sensor} ] || echo "$sensor" > /sys/class/gpio/export
+	[ -d /sys/class/gpio/gpio${led} ] || echo "$led" > /sys/class/gpio/export
+
+	# Set directions
+	echo "in" > /sys/class/gpio/gpio${sensor}/direction
+	echo "out" > /sys/class/gpio/gpio${led}/direction
+
+	# Start the passthrough loop
+	procd_open_instance
+	procd_set_param command /bin/sh -c "
+		while true; do
+			cat /sys/class/gpio/gpio${sensor}/value > /sys/class/gpio/gpio${led}/value
+			sleep 1
+		done"
+	procd_set_param respawn
+	procd_close_instance
+}
+
+stop_service() {
+	config_load 'ir-led'
+	config_foreach stop_instance 'ir-led'
+}
+
+stop_instance() {
+	local section="$1"
+
+	local sensor led
+	config_get sensor "$section" 'sensor'
+	config_get led "$section" 'led'
+
+	[ -d /sys/class/gpio/gpio${sensor} ] && echo "$sensor" > /sys/class/gpio/unexport
+	[ -d /sys/class/gpio/gpio${led} ] && echo "$led" > /sys/class/gpio/unexport
+}

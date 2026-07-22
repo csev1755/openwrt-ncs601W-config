@@ -1,0 +1,26 @@
+From ec87fb99538cdc47f949c531a5850020ffe54acd Mon Sep 17 00:00:00 2001
+From: csev1755 <49533775+csev1755@users.noreply.github.com>
+Date: Mon, 20 Jul 2026 21:50:07 -0500
+Subject: [PATCH 2/2] set basic default device type
+
+Signed-off-by: csev1755 <49533775+csev1755@users.noreply.github.com>
+---
+ include/target.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/target.mk b/include/target.mk
+index 9b692ddf42..ec3e851009 100644
+--- a/include/target.mk
++++ b/include/target.mk
+@@ -10,7 +10,7 @@ __target_inc=1
+ ##@
+ # @brief Default device type ( basic | nas | router ).
+ ##
+-DEVICE_TYPE?=router
++DEVICE_TYPE?=basic
+ 
+ ##@
+ # @brief Default packages.
+-- 
+2.55.0
+
