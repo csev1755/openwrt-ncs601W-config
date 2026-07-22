@@ -1,5 +1,5 @@
 # OpenWRT NCS601W (and clones) Config
-This repository contains an OpenWRT patchset to maintain and adjust Wansview NCS601W functionality. These were developed and tested on two Belkin Netcam F7D7601v1 model cameras, but should work with the Wansview NCS601W, imogenstudio +CAM and Aztech WIPC303 as they appear to be clones. Be aware OpenWRT [does not recommend devices with 8MB of flash](https://openwrt.org/supported_devices/864_warning) and I'm unsure how long this patchset will be applicable or how long the NCS601W will be supported at all.
+This repository contains an OpenWRT patchset to maintain and adjust Wansview NCS601W functionality. These were developed and tested on two Belkin Netcam F7D7601v1 model cameras, but should work with the Wansview NCS601W, imogenstudio +CAM and Aztech WIPC303 as they appear to be clones. Be aware OpenWRT [does not recommend devices with 8MB of flash](https://openwrt.org/supported_devices/864_warning) and I'm unsure how long this patchset will be applicable or how long the NCS601W will be supported at all. I intend to periodiocally apply these patches to the OpenWRT main branch to confirm they still build a valid image.
 
 ## Flashing the firmware
 
