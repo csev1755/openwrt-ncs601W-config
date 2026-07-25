@@ -1,24 +1,26 @@
-# OpenWRT NCS601W (and clones) Config
-This repository contains an OpenWRT patchset to maintain and adjust Wansview NCS601W functionality. These were developed and tested on two Belkin Netcam F7D7601v1 model cameras, but should work with the Wansview NCS601W, imogenstudio +CAM and Aztech WIPC303 as they appear to be clones. Be aware OpenWRT [does not recommend devices with 8MB of flash](https://openwrt.org/supported_devices/864_warning) and I'm unsure how long this patchset will be applicable or how long the NCS601W will be supported at all. I intend to periodiocally apply these patches to the OpenWRT main branch to confirm they still build a valid image.
+# OpenWRT NCS601W (and clones) Custom Firmware Image
+This repository contains an OpenWRT patchset to maintain and adjust **Wansview NCS601W** functionality. These were developed and tested on two **Belkin Netcam F7D7601v1** model cameras, but should work with the **Wansview NCS601W**, **imogenstudio +CAM** and **Aztech WIPC303** as they appear to be clones. Be aware OpenWRT [does not recommend devices with 8MB of flash](https://openwrt.org/supported_devices/864_warning) and I'm unsure how long this patchset will be applicable or how long the NCS601W will be supported at all. I will do my best to periodiocally apply these patches to the OpenWRT main branch to confirm they still build a valid image.
 
 ## Flashing the firmware
 
 ### Requirements
 
  - TFTP server
- - USB to UART adapter
+ - UART adapter
 
 ### Installation
 
-Installing firmware requires opening of the device. You'll need to use of some kind of spudger to pry open the chassis and unclip the retention mechanism. Once you're in, you should see a 4 pin UART header clearly marked on the board. Boot up the device with your USB to UART adapter and COM terminal of choice (8N1 57600 baudrate), select U-BOOT option 2, and enter in your TFTP information. This will flash the image to your device. From here, you can check core functionality of the device. I set the default network configuration to DHCP on the ethernet port but this can be changed to whatever you desire via [OpenWRT's UCI configuration interface.](https://openwrt.org/docs/guide-user/base-system/uci) To reserve flash space, the standard LuCI WebUI is not installed, but the [ustreamer](https://github.com/pikvm/ustreamer) WebUI will be available at http://your-camera-ip-here:8080.
+   1. Pry open the chassis and connect to the labeled UART header (57600 baud 8N1)
+   2. Power on the camera and choose U-Boot option: `2: Load system code then write to Flash via TFTP`
+
+> [!NOTE]
+> If the device doesn't behave as expected with UART attached, it's possible that voltage from the UART adapter is affecting the SoC's bootstrap configuration pins. Try powering on the device with the UART adapter disconnected and plug it back in a few seconds later.
 
 ## Configuration
 
-This image includes two new services `audio-streamer` and `ir-led` to use along with `ustreamer` to get full IP camera functionality. These can all be configured via UCI in `/etc/config` and are enabled by default.
+The camera will attempt to get an IP via DHCP on the Ethernet port. To conserve flash space, the standard LuCI WebUI is not included. Settings are available via [OpenWrt's UCI configuration interface](https://openwrt.org/docs/guide-user/base-system/uci). This image also includes two new services, `audio-streamer` and `ir-led`, to use along with [ustreamer](https://github.com/pikvm/ustreamer) for full IP camera functionality. These are all enabled by default.
 
-### Camera/setup switch
-
-The setup switch is connected to GPIO 512 and can be used in scripts however you'd like:
+The camera/setup toggle switch is connected to GPIO 512 and can be used in scripts:
 
 ```sh
 # Export the GPIO
@@ -29,9 +31,9 @@ echo in > /sys/class/gpio/gpio512/direction
 cat /sys/class/gpio/gpio512/value
 ```
 
-### RTSP
+## Viewing the stream
 
-You can use a [go2rtc](https://go2rtc.org/) server to make an RTSP stream:
+The ustreamer WebUI is available at `http://your-camera-ip:8080` for viewing video without audio. To include audio and support NVR setups, you can use a [go2rtc](https://go2rtc.org/) server to make an RTSP stream:
 
 ```yaml
 streams:
